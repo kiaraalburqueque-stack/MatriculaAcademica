@@ -1,0 +1,619 @@
+{
+  "info": {
+    "name": "Laboratorio 02 - Kiara Paola Alburqueque Arzapalo",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": "Ejecutar en orden con los tres servicios iniciados. Elimina al final únicamente los registros creados en esta ejecución."
+  },
+  "variable": [
+    {
+      "key": "estudianteUrl",
+      "value": "http://localhost:8081"
+    },
+    {
+      "key": "cursoUrl",
+      "value": "http://localhost:8082"
+    },
+    {
+      "key": "matriculaUrl",
+      "value": "http://localhost:8083"
+    }
+  ],
+  "item": [
+    {
+      "name": "Crear estudiante",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{estudianteUrl}}/api/estudiantes",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"codigo\": \"EST-{{$timestamp}}\",\n  \"nombres\": \"Kiara Paola\",\n  \"apellidos\": \"Alburqueque Arzapalo\",\n  \"correo\": \"kiara@example.com\",\n  \"estado\": \"ACTIVO\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 201\", () => pm.response.to.have.status(201));",
+              "pm.collectionVariables.set(\"idEstudiante\", pm.response.json().id);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Crear curso",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{cursoUrl}}/api/cursos",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"codigo\": \"CUR-{{$timestamp}}\",\n  \"nombre\": \"Desarrollo de aplicaciones Web\",\n  \"creditos\": 4,\n  \"vacantes\": 30\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 201\", () => pm.response.to.have.status(201));",
+              "pm.collectionVariables.set(\"idCurso\", pm.response.json().id);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Crear matricula",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{matriculaUrl}}/api/matriculas",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"idEstudiante\": \"{{idEstudiante}}\",\n  \"idCurso\": \"{{idCurso}}\",\n  \"fecha\": \"2026-11-04\",\n  \"estado\": \"ACTIVA\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 201\", () => pm.response.to.have.status(201));",
+              "pm.collectionVariables.set(\"idMatricula\", pm.response.json().id);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Listar matrículas - aceptación",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{matriculaUrl}}/api/matriculas"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));",
+              "pm.test(\"Matrícula registrada\", () => pm.expect(pm.response.json().some(x => x.id === Number(pm.collectionVariables.get(\"idMatricula\")))).to.be.true);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Listar estudiantes",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{estudianteUrl}}/api/estudiantes"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Buscar estudiante",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{estudianteUrl}}/api/estudiantes/{{idEstudiante}}"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Actualizar estudiante",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{estudianteUrl}}/api/estudiantes/{{idEstudiante}}",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"codigo\": \"EST-UPD-{{$timestamp}}\",\n  \"nombres\": \"Kiara\",\n  \"apellidos\": \"Alburqueque Arzapalo\",\n  \"correo\": \"kiara@example.com\",\n  \"estado\": \"ACTIVO\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Listar cursos",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{cursoUrl}}/api/cursos"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Buscar curso",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{cursoUrl}}/api/cursos/{{idCurso}}"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Actualizar curso",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{cursoUrl}}/api/cursos/{{idCurso}}",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"codigo\": \"CUR-UPD-{{$timestamp}}\",\n  \"nombre\": \"Desarrollo de aplicaciones Web\",\n  \"creditos\": 5,\n  \"vacantes\": 30\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Listar matriculas",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{matriculaUrl}}/api/matriculas"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Buscar matricula",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{matriculaUrl}}/api/matriculas/{{idMatricula}}"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Actualizar matricula",
+      "request": {
+        "method": "PUT",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{matriculaUrl}}/api/matriculas/{{idMatricula}}",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"idEstudiante\": \"{{idEstudiante}}\",\n  \"idCurso\": \"{{idCurso}}\",\n  \"fecha\": \"2026-11-04\",\n  \"estado\": \"ANULADA\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Error créditos cero",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{cursoUrl}}/api/cursos",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"codigo\": \"CUR-{{$timestamp}}\",\n  \"nombre\": \"Desarrollo de aplicaciones Web\",\n  \"creditos\": 0,\n  \"vacantes\": 30\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 400\", () => pm.response.to.have.status(400));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Error nombres vacíos",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{estudianteUrl}}/api/estudiantes",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"codigo\": \"EST-{{$timestamp}}\",\n  \"nombres\": \"\",\n  \"apellidos\": \"Alburqueque Arzapalo\",\n  \"correo\": \"kiara@example.com\",\n  \"estado\": \"ACTIVO\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 400\", () => pm.response.to.have.status(400));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Error correo inválido",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{estudianteUrl}}/api/estudiantes",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"codigo\": \"EST-{{$timestamp}}\",\n  \"nombres\": \"Kiara Paola\",\n  \"apellidos\": \"Alburqueque Arzapalo\",\n  \"correo\": \"incorrecto\",\n  \"estado\": \"ACTIVO\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 400\", () => pm.response.to.have.status(400));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Error ID inexistente",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{estudianteUrl}}/api/estudiantes/2147483647"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 404\", () => pm.response.to.have.status(404));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Error referencia inexistente",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{matriculaUrl}}/api/matriculas",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"idEstudiante\": 2147483647,\n  \"idCurso\": \"{{idCurso}}\",\n  \"fecha\": \"2026-11-04\",\n  \"estado\": \"ACTIVA\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 404\", () => pm.response.to.have.status(404));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Obtener código existente",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": "{{estudianteUrl}}/api/estudiantes/{{idEstudiante}}"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 200\", () => pm.response.to.have.status(200));",
+              "pm.collectionVariables.set(\"codigoExistente\", pm.response.json().codigo);"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Error código duplicado",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "url": "{{estudianteUrl}}/api/estudiantes",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"codigo\": \"{{codigoExistente}}\",\n  \"nombres\": \"Kiara Paola\",\n  \"apellidos\": \"Alburqueque Arzapalo\",\n  \"correo\": \"kiara@example.com\",\n  \"estado\": \"ACTIVO\"\n}",
+          "options": {
+            "raw": {
+              "language": "json"
+            }
+          }
+        }
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 409\", () => pm.response.to.have.status(409));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Eliminar matricula",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": "{{matriculaUrl}}/api/matriculas/{{idMatricula}}"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 204\", () => pm.response.to.have.status(204));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Eliminar curso",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": "{{cursoUrl}}/api/cursos/{{idCurso}}"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 204\", () => pm.response.to.have.status(204));"
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "name": "Eliminar estudiante",
+      "request": {
+        "method": "DELETE",
+        "header": [],
+        "url": "{{estudianteUrl}}/api/estudiantes/{{idEstudiante}}"
+      },
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "type": "text/javascript",
+            "exec": [
+              "pm.test(\"HTTP 204\", () => pm.response.to.have.status(204));"
+            ]
+          }
+        }
+      ]
+    }
+  ]
+}

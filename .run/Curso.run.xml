@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Curso - 8082" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="pe.edu.kiara.curso.CursoApplication" />
+    <module name="curso-service" />
+    <method v="2"><option name="Make" enabled="true" /></method>
+  </configuration>
+</component>

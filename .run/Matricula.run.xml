@@ -1,0 +1,7 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="Matricula - 8083" type="Application" factoryName="Application">
+    <option name="MAIN_CLASS_NAME" value="pe.edu.kiara.matricula.MatriculaApplication" />
+    <module name="matricula-service" />
+    <method v="2"><option name="Make" enabled="true" /></method>
+  </configuration>
+</component>

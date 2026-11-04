@@ -1,0 +1,10 @@
+**/target/
+.idea/
+*.iml
+.env
+*.log
+*.zip
+.tools/
+initializr-metadata.json
+base/
+generate_project.py

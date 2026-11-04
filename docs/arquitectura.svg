@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="650" viewBox="0 0 1100 650">
+<defs><marker id="arrow" markerWidth="10" markerHeight="10" refX="8" refY="3" orient="auto"><path d="M0,0 L0,6 L9,3 z" fill="#475569"/></marker></defs>
+<rect width="1100" height="650" fill="#f8fafc"/>
+<g font-family="Arial,sans-serif" text-anchor="middle" fill="#0f172a">
+<text x="550" y="45" font-size="26" font-weight="bold">Sistema de matrícula académica</text>
+<text x="550" y="75" font-size="16">Kiara Paola Alburqueque Arzapalo · Laboratorio 02</text>
+<rect x="450" y="105" width="200" height="55" rx="10" fill="#e2e8f0" stroke="#64748b"/><text x="550" y="140" font-size="19">Postman</text>
+<g stroke="#475569" stroke-width="2" fill="none" marker-end="url(#arrow)">
+<path d="M450 132 H200 V237"/><path d="M550 160 V237"/><path d="M650 132 H900 V237"/>
+<path d="M200 345 V477"/><path d="M550 345 V477"/><path d="M900 345 V477"/>
+<path d="M820 345 V415 H270 V345"/><path d="M900 345 V440 H620 V345"/>
+</g>
+<g stroke="#2563eb" fill="#eff6ff"><rect x="75" y="240" width="250" height="105" rx="12"/><rect x="425" y="240" width="250" height="105" rx="12"/><rect x="775" y="240" width="250" height="105" rx="12"/></g>
+<text x="200" y="271" font-size="20" font-weight="bold">Estudiante · 8081</text><text x="200" y="300" font-size="16">Identidad y contacto</text><text x="200" y="324" font-size="15">/api/estudiantes</text>
+<text x="550" y="271" font-size="20" font-weight="bold">Curso · 8082</text><text x="550" y="300" font-size="16">Catálogo, créditos y vacantes</text><text x="550" y="324" font-size="15">/api/cursos</text>
+<text x="900" y="271" font-size="20" font-weight="bold">Matrícula · 8083</text><text x="900" y="300" font-size="16">IDs, fecha y estado</text><text x="900" y="324" font-size="15">/api/matriculas</text>
+<rect x="350" y="366" width="400" height="28" fill="#f8fafc"/><text x="550" y="386" font-size="15">Matrícula verifica referencias mediante HTTP</text>
+<g stroke="#15803d" fill="#f0fdf4"><rect x="75" y="480" width="250" height="75" rx="15"/><rect x="425" y="480" width="250" height="75" rx="15"/><rect x="775" y="480" width="250" height="75" rx="15"/></g>
+<text x="200" y="514" font-size="20">bd_estudiante</text><text x="200" y="540" font-size="15">Tabla estudiantes</text>
+<text x="550" y="514" font-size="20">bd_curso</text><text x="550" y="540" font-size="15">Tabla cursos</text>
+<text x="900" y="514" font-size="20">bd_matricula</text><text x="900" y="540" font-size="15">Tabla matriculas</text>
+<text x="550" y="604" font-size="17">Spring Data JPA → bases independientes en MySQL de XAMPP</text>
+<text x="550" y="632" font-size="15">Cada servicio accede únicamente a su propia base de datos</text>
+</g></svg>

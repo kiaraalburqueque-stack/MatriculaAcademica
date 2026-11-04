@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: matricula-service
+  profiles:
+    default: dev
+  jpa:
+    open-in-view: false
+server:
+  port: ${SERVER_PORT:8083}
+servicios:
+  estudiante-url: ${ESTUDIANTE_URL:http://localhost:8081}
+  curso-url: ${CURSO_URL:http://localhost:8082}

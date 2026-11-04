@@ -1,0 +1,318 @@
+{
+  "motor": "MariaDB incluido en XAMPP, instancia temporal en puerto 33307",
+  "servicios": "Instancias temporales 18081/18082/18083, perfil dev",
+  "resultado": "APROBADO",
+  "persistenciaTrasReinicio": "APROBADO",
+  "operaciones": [
+    {
+      "method": "POST",
+      "resource": "estudiante",
+      "status": 201,
+      "request": {
+        "codigo": "E-INTEGRACION",
+        "nombres": "Kiara Paola",
+        "apellidos": "Alburqueque Arzapalo",
+        "correo": "kiara@example.com",
+        "estado": "ACTIVO"
+      },
+      "response": {
+        "id": 1,
+        "codigo": "E-INTEGRACION",
+        "nombres": "Kiara Paola",
+        "apellidos": "Alburqueque Arzapalo",
+        "correo": "kiara@example.com",
+        "estado": "ACTIVO"
+      }
+    },
+    {
+      "method": "POST",
+      "resource": "curso",
+      "status": 201,
+      "request": {
+        "codigo": "C-INTEGRACION",
+        "nombre": "Desarrollo Web",
+        "creditos": 4,
+        "vacantes": 30
+      },
+      "response": {
+        "id": 1,
+        "codigo": "C-INTEGRACION",
+        "nombre": "Desarrollo Web",
+        "creditos": 4,
+        "vacantes": 30
+      }
+    },
+    {
+      "method": "POST",
+      "resource": "matricula",
+      "status": 201,
+      "request": {
+        "idEstudiante": 1,
+        "idCurso": 1,
+        "fecha": "2026-11-04",
+        "estado": "ACTIVA"
+      },
+      "response": {
+        "id": 1,
+        "idEstudiante": 1,
+        "idCurso": 1,
+        "fecha": "2026-11-04",
+        "estado": "ACTIVA"
+      }
+    },
+    {
+      "method": "GET",
+      "resource": "matricula",
+      "status": 200,
+      "request": null,
+      "response": [
+        {
+          "id": 1,
+          "idEstudiante": 1,
+          "idCurso": 1,
+          "fecha": "2026-11-04",
+          "estado": "ACTIVA"
+        }
+      ]
+    },
+    {
+      "method": "POST",
+      "resource": "curso",
+      "status": 400,
+      "request": {
+        "codigo": "C-INTEGRACION",
+        "nombre": "Desarrollo Web",
+        "creditos": 0,
+        "vacantes": 30
+      },
+      "response": {
+        "timestamp": "2026-11-04T18:49:55.604317300Z",
+        "status": 400,
+        "mensaje": "Revise los campos enviados",
+        "ruta": "/api/cursos",
+        "campos": {
+          "creditos": "debe ser mayor que 0"
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "resource": "estudiante",
+      "status": 400,
+      "request": {
+        "codigo": "E-INTEGRACION",
+        "nombres": "",
+        "apellidos": "Alburqueque Arzapalo",
+        "correo": "kiara@example.com",
+        "estado": "ACTIVO"
+      },
+      "response": {
+        "timestamp": "2026-11-04T18:49:55.649244500Z",
+        "status": 400,
+        "mensaje": "Revise los campos enviados",
+        "ruta": "/api/estudiantes",
+        "campos": {
+          "nombres": "no debe estar vacío"
+        }
+      }
+    },
+    {
+      "method": "POST",
+      "resource": "estudiante",
+      "status": 409,
+      "request": {
+        "codigo": "E-INTEGRACION",
+        "nombres": "Kiara Paola",
+        "apellidos": "Alburqueque Arzapalo",
+        "correo": "kiara@example.com",
+        "estado": "ACTIVO"
+      },
+      "response": {
+        "timestamp": "2026-11-04T18:49:55.701338700Z",
+        "status": 409,
+        "mensaje": "El código ya existe o el registro incumple una restricción de datos",
+        "ruta": "/api/estudiantes",
+        "campos": {}
+      }
+    },
+    {
+      "method": "POST",
+      "resource": "matricula",
+      "status": 404,
+      "request": {
+        "idEstudiante": 1,
+        "idCurso": 999999,
+        "fecha": "2026-11-04",
+        "estado": "ACTIVA"
+      },
+      "response": {
+        "timestamp": "2026-11-04T18:49:55.730645300Z",
+        "status": 404,
+        "mensaje": "Curso no encontrado: 999999",
+        "ruta": "/api/matriculas",
+        "campos": {}
+      }
+    },
+    {
+      "method": "GET",
+      "resource": "estudiante/999999",
+      "status": 404,
+      "request": null,
+      "response": {
+        "timestamp": "2026-11-04T18:49:55.758761100Z",
+        "status": 404,
+        "mensaje": "Estudiante no encontrado: 999999",
+        "ruta": "/api/estudiantes/999999",
+        "campos": {}
+      }
+    },
+    {
+      "method": "GET",
+      "resource": "estudiante/1",
+      "status": 200,
+      "request": null,
+      "response": {
+        "id": 1,
+        "codigo": "E-INTEGRACION",
+        "nombres": "Kiara Paola",
+        "apellidos": "Alburqueque Arzapalo",
+        "correo": "kiara@example.com",
+        "estado": "ACTIVO"
+      }
+    },
+    {
+      "method": "PUT",
+      "resource": "estudiante/1",
+      "status": 200,
+      "request": {
+        "codigo": "E-INTEGRACION",
+        "nombres": "Kiara Paola",
+        "apellidos": "Alburqueque Arzapalo",
+        "correo": "kiara@example.com",
+        "estado": "ACTIVO"
+      },
+      "response": {
+        "id": 1,
+        "codigo": "E-INTEGRACION",
+        "nombres": "Kiara Paola",
+        "apellidos": "Alburqueque Arzapalo",
+        "correo": "kiara@example.com",
+        "estado": "ACTIVO"
+      }
+    },
+    {
+      "method": "GET",
+      "resource": "curso/1",
+      "status": 200,
+      "request": null,
+      "response": {
+        "id": 1,
+        "codigo": "C-INTEGRACION",
+        "nombre": "Desarrollo Web",
+        "creditos": 4,
+        "vacantes": 30
+      }
+    },
+    {
+      "method": "PUT",
+      "resource": "curso/1",
+      "status": 200,
+      "request": {
+        "codigo": "C-INTEGRACION",
+        "nombre": "Desarrollo Web",
+        "creditos": 4,
+        "vacantes": 30
+      },
+      "response": {
+        "id": 1,
+        "codigo": "C-INTEGRACION",
+        "nombre": "Desarrollo Web",
+        "creditos": 4,
+        "vacantes": 30
+      }
+    },
+    {
+      "method": "GET",
+      "resource": "matricula/1",
+      "status": 200,
+      "request": null,
+      "response": {
+        "id": 1,
+        "idEstudiante": 1,
+        "idCurso": 1,
+        "fecha": "2026-11-04",
+        "estado": "ACTIVA"
+      }
+    },
+    {
+      "method": "PUT",
+      "resource": "matricula/1",
+      "status": 200,
+      "request": {
+        "idEstudiante": 1,
+        "idCurso": 1,
+        "fecha": "2026-11-04",
+        "estado": "ACTIVA"
+      },
+      "response": {
+        "id": 1,
+        "idEstudiante": 1,
+        "idCurso": 1,
+        "fecha": "2026-11-04",
+        "estado": "ACTIVA"
+      }
+    },
+    {
+      "method": "GET",
+      "resource": "matricula/1",
+      "status": 200,
+      "request": null,
+      "response": {
+        "id": 1,
+        "idEstudiante": 1,
+        "idCurso": 1,
+        "fecha": "2026-11-04",
+        "estado": "ACTIVA"
+      }
+    },
+    {
+      "method": "POST",
+      "resource": "matricula",
+      "status": 503,
+      "request": {
+        "idEstudiante": 1,
+        "idCurso": 1,
+        "fecha": "2026-11-04",
+        "estado": "ACTIVA"
+      },
+      "response": {
+        "timestamp": "2026-11-04T18:50:00.375053200Z",
+        "status": 503,
+        "mensaje": "No se pudo verificar el estudiante o curso. Compruebe los otros servicios",
+        "ruta": "/api/matriculas",
+        "campos": {}
+      }
+    },
+    {
+      "method": "DELETE",
+      "resource": "matricula/1",
+      "status": 204,
+      "request": null,
+      "response": null
+    },
+    {
+      "method": "DELETE",
+      "resource": "curso/1",
+      "status": 204,
+      "request": null,
+      "response": null
+    },
+    {
+      "method": "DELETE",
+      "resource": "estudiante/1",
+      "status": 204,
+      "request": null,
+      "response": null
+    }
+  ]
+}
